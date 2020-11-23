@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\controllers;
 
 use Yii;
@@ -9,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -63,8 +63,12 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $parent = $model->parent;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'parent' => $parent,
+            'model' => $model,
         ]);
     }
 
@@ -76,6 +80,7 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
+        $categories = $this->getCategories($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -83,6 +88,7 @@ class CategoryController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categories' => $categories,
         ]);
     }
 
@@ -96,6 +102,7 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $categories = $this->getCategories($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -103,6 +110,7 @@ class CategoryController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'categories' => $categories,
         ]);
     }
 
@@ -134,5 +142,36 @@ class CategoryController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function getCategories ($model) {
+
+        $subcategories = Category::find()->where(['parent_id' => $model->id])->all();
+
+        $dataCategory = [];
+
+        if(!empty($subcategories) && $model->id != null)
+        {
+            $dataCategory = ['' => 'This category is a parent and cannot have a parent'];
+        } 
+        else 
+        {
+            $dataCategory = ['' => ' '] + ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'description');
+            if($model->id != null && $model->id != '')
+            {
+                unset($dataCategory[$model->id]);
+            }
+
+            $all_categories = Category::find()->all();
+            foreach ($all_categories as $category)
+            {
+                if($category->parent_id != null && $category->parent_id != '')
+                {
+                    unset($dataCategory[$category->id]);
+
+                }
+            }
+        }
+        return $dataCategory;
     }
 }

@@ -55,7 +55,7 @@ class Category extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
+    public function getChildren()
     {
         return $this->hasMany(Category::className(), ['parent_id' => 'id']);
     }
@@ -78,5 +78,13 @@ class Category extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id_category' => 'id']);
+    }
+
+    public function getParentName()
+    {
+        if($this->parent_id != null)
+        {
+            return Category::find()->where(['id' => $this->parent_id])->One()->description;
+        }
     }
 }
