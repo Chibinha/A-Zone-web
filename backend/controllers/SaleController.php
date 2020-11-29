@@ -6,6 +6,9 @@ use Yii;
 use common\models\Sale;
 use common\models\SaleSearch;
 use common\models\SaleItem;
+use common\models\SaleItemSearch;
+use common\models\Profile;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -64,8 +67,16 @@ class SaleController extends Controller
      */
     public function actionView($id)
     {
+        $sale = $this->findModel($id);
+        $buyer = Profile::findOne($sale['id_user']);
+        $searchModel = new SaleItemSearch();
+        $dataProvider = $searchModel->search([$searchModel->formName() => ['id_sale' => $id]]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'sale' => $sale,
+            'buyer' => $buyer,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

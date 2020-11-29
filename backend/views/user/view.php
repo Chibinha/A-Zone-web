@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    
+    <?php if ($role) { ?> 
+    <h3 style="color:red"> This user is an employee </h3>
+    <?php } ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -46,7 +48,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]);} ?>
     </p>
-    <?php if ($role) { ?> 
-    <h3 style="color:red"> This user is an employee </h3>
-    <?php } ?>
 </div>
