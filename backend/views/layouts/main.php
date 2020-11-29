@@ -53,6 +53,7 @@ AppAsset::register($this);
             ['label' => 'Sales', 'url' => ['/sale/index']],
             ['label' => 'Products', 'url' => ['/product/index']],
             ['label' => 'Categories', 'url' => ['/category/index']],
+            //Only accessable by the admin
             ['label' => 'Users', 'url' => ['/user/index']],
         ];
         $menuItems[] = '<li>'
@@ -69,7 +70,6 @@ AppAsset::register($this);
             ['label' => 'Sales', 'url' => ['/sale/index']],
             ['label' => 'Products', 'url' => ['/product/index']],
             ['label' => 'Categories', 'url' => ['/category/index']],
-            ['label' => 'Users', 'url' => ['/user/index']],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

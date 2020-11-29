@@ -34,7 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'user';
     }
 
     /**
@@ -47,17 +47,38 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
+        ];  
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['email', 'trim'],
+            ['email', 'required', 'message' => 'Introduza um e-mail.'],
+            ['email', 'email', 'message' => 'Introduza um e-mail válido.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já está registado.'],
+            ['email', 'string', 'max' => 255],
         ];
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -71,7 +92,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['auth_key' => $token, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -83,6 +104,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    public static function findIdByAccessToken($token)
+    {
+        return static::findOne(['auth_key' => $token, 'status' => self::STATUS_ACTIVE])->id;
     }
 
     /**
@@ -193,7 +219,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
-
+    
     /**
      * Generates new token for email verification
      */
@@ -208,5 +234,25 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getProfiles()
+    {
+        return $this->hasMany(Profile::className(), ['id_user' => 'id']);
+    }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['id_user' => 'id']);
+    }
+
+    public function getStatus()
+    {
+        if ($this->status == "9")
+            return ("Por ativar");
+        else if ($this->status == "10")
+            return ("Ativa");
+        else 
+            return ("Eliminada");
     }
 }
