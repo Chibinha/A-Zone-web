@@ -8,6 +8,7 @@ use common\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -24,6 +25,16 @@ class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'isworker'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
         ];
@@ -55,6 +66,7 @@ class UserController extends Controller
         
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'role' => \Yii::$app->authManager->checkAccess($id, 'worker')
         ]);
     }
 
@@ -86,6 +98,7 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $role = \Yii::$app->authManager->checkAccess($id, 'worker');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -93,6 +106,7 @@ class UserController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'role' => $role,
         ]);
     }
 
@@ -126,5 +140,31 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionIsworker($id)
+    {
+        $model = $this->findModel($id);
+
+        if($model)
+        {
+            $auth = \Yii::$app->authManager;
+            $authorRole = $auth->getRole('worker');
+            $role = $auth->checkAccess($id, 'worker');
+            if($role)
+            {
+                $auth->revoke($authorRole, $model->getId());
+                \Yii::$app->session->addFlash('success', 'Role revoked.');
+            }
+            else
+            {
+                $auth->assign($authorRole, $model->getId());
+                \Yii::$app->session->addFlash('success', 'Role Assigned.');
+            }
+        }
+        else
+            \Yii::$app->session->addFlash('error', 'Error when changing role.');
+            
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 }

@@ -15,9 +15,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'username',
+            'email:email',
+            'profile.phone',
+            'profile.nif',
+            'profile.address',
+            'profile.postal_code',
+            'profile.city',
+            'profile.country',
+            'status' => 'Status',
+            'created_at:date',
+            'updated_at:date',
+        ],
+    ]) ?>
+
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);?>
-        <?php if ($model->status == '10' || $model->status == '9')
+        <?php if ($model->status != '0')
         {?>
             <?=Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -27,21 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]);} ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'email:email',
-            'profile.phone',
-            'profile.nif',
-            'profile.address',
-            'profile.postal_code',
-            'profile.city',
-            'profile.country',
-            'status',
-            'created_at:date',
-            'updated_at:date',
-        ],
-    ]) ?>
-
+    <?php if ($role) { ?> 
+    <h3 style="color:red"> This user is an employee </h3>
+    <?php } ?>
 </div>
