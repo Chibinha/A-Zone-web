@@ -11,13 +11,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+
 <div class="sale-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
     <p>
+    <?= Html::a('Update', ['update', 'id' => $sale->id], ['class' => 'btn btn-primary']) ?>
         <?php if ($sale->sale_finished == '0')
         {?>
-        <?= Html::a('Update', ['update', 'id' => $sale->id], ['class' => 'btn btn-primary']) ?>
             <?=Html::a('Delete', ['delete', 'id' => $sale->id], [
             'class' => 'btn btn-danger',
             'data' => [

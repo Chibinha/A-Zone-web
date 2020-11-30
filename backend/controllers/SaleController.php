@@ -35,7 +35,7 @@ class SaleController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['admin' , 'worker'],
                     ],
@@ -81,24 +81,6 @@ class SaleController extends Controller
     }
 
     /**
-     * Creates a new Sale model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Sale();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
      * Updates an existing Sale model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -108,13 +90,17 @@ class SaleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $user =  User::find()->where(['id' => $model->id_user])->One();
+        $sale_items = SaleItem::find()->where(['id_sale' => $model->id])->all();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'user' => $user,
+            'sale_items' => $sale_items,
         ]);
     }
 
@@ -127,12 +113,19 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if ($model->sale_finished == 1)
+        {
+            \Yii::$app->session->addFlash('error', 'Sale has been closed, therefore it cannot be deleted');
+        }
+        else
+        {
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 
-    /**
+      /**
      * Finds the Sale model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
