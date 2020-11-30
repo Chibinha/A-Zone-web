@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <br>
 
-    <h3>Buyer's information</h3>
+    <h3>Informação do comprador</h3>
     <table class="table">
         <thead>
             <tr>
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
     <br>
 
-    <h3>Sale information</h3>
+    <h3>Informação da Venda</h3>
     <table class="table">
         <thead>
             <tr>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
     <br>
 
-    <h3>Sale products</h3>
+    <h3>Produtos</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

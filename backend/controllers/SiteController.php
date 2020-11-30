@@ -6,6 +6,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\SaleSearch;
+use common\models\Sale;
 
 /**
  * Site controller
@@ -22,13 +24,13 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'logout'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin' , 'worker'],
                     ],
                 ],
             ],
@@ -60,7 +62,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new SaleSearch();
+        $dataProvider = $searchModel->search(['sale_finished' => 0]); 
+        $sale_not_finished = Sale::find()->where(['sale_finished' => 0])->all();
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'sale_not_finished' => $sale_not_finished,
+        ]);
     }
 
     /**
