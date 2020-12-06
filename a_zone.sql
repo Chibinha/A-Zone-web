@@ -150,8 +150,8 @@ CREATE TABLE IF NOT EXISTS `product` (
 DROP TABLE IF EXISTS `profile`;
 CREATE TABLE IF NOT EXISTS `profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(50) NOT NULL,
-  `lastName` varchar(50) NOT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `nif` int(9) DEFAULT NULL,
