@@ -5,9 +5,12 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Sale;
 use common\models\SaleSearch;
+use common\models\SaleItemSearch;
+use common\models\Profile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * SaleController implements the CRUD actions for Sale model.
@@ -24,6 +27,16 @@ class SaleController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -54,8 +67,14 @@ class SaleController extends Controller
      */
     public function actionView($id)
     {
+        $sale = $this->findModel($id);
+        $buyer = Profile::find()->where(['id_user' => $sale->id_user])->one();
+        $sale_items = $sale->saleItems;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'sale' => $sale,
+            'buyer' => $buyer,
+            'sale_items' => $sale_items,
         ]);
     }
 

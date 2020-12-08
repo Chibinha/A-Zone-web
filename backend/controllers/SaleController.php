@@ -68,7 +68,7 @@ class SaleController extends Controller
     public function actionView($id)
     {
         $sale = $this->findModel($id);
-        $buyer = Profile::findOne($sale['id_user']);
+        $buyer = Profile::find()->where(['id_user' => $sale->id_user])->one();
         $searchModel = new SaleItemSearch();
         $dataProvider = $searchModel->search([$searchModel->formName() => ['id_sale' => $id]]);
 

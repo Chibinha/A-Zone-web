@@ -82,7 +82,7 @@ class Sale extends \yii\db\ActiveRecord
     public static function getQuantityPrice($sale_item)
     {
         $subTotal = $sale_item['unit_price'] * $sale_item['quantity'];
-        return $subTotal . '€';
+        return $subTotal;
     }
 
     public function getTotal()
