@@ -41,6 +41,8 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Registar', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        
+        $menuItems[] = ['label' => 'Encomendas', 'url' => ['/sale/index']];
         $menuItems[] = ['label' => 'Editar conta', 'url' => ['/user/update' , 'id' => Yii::$app->user->identity->id]];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

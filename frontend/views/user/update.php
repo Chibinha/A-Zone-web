@@ -12,7 +12,7 @@ $this->title = 'Alterar Dados';
     <div class="user-update">
         <?php $form = ActiveForm::begin([]) ?>
 
-            <h2>Informação Pessoal</h2>
+            <h3>Informação Pessoal</h3>
             <?= $form->field($user, 'username')->label('Nome de Utilizador')->textInput(['readOnly' => true])?>
             <?= $form->field($user, 'email')->label('E-mail')->textInput(['readOnly' => true]) ?>
             <?= $form->field($profile, 'firstName')->label('Nome') ?>
@@ -20,7 +20,7 @@ $this->title = 'Alterar Dados';
             <?= $form->field($profile, 'phone')->label('Telefone') ?>   
             <?= $form->field($profile, 'nif')->label('NIF') ?>
             <hr>
-            <h2>Morada</h2>
+            <h3>Morada</h3>
             <?= $form->field($profile, 'country')->label('Cidade') ?>   
             <?= $form->field($profile, 'city')->label('Cidade') ?>
             <?= $form->field($profile, 'postal_code')->label('Código Postal') ?>
