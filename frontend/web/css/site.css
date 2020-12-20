@@ -118,3 +118,61 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.pan{
+    text-decoration-thickness: 3px;
+}
+
+.card a{
+    text-decoration: none;
+}
+
+.card{
+    min-height: 430px;
+    padding: 15px;
+    display: inline-block;
+}
+
+.prod-content {
+    box-shadow: 0 2px 15px  rgb(0, 100, 0);
+    padding: 15px;
+}
+.prod-img {
+    width:100%;
+    margin-top: 15px;
+}
+
+.prod-title{
+    font-size: 18px;
+    color: black;
+    overflow: hidden;
+    height: 40px;
+}
+
+.description{
+    font-size: 12px;
+    color: rgb(153, 153, 153);
+    overflow: hidden;
+    height: 48px;
+    margin-bottom: 30px;
+}
+
+.price {
+    color: rgb(0, 175, 0);
+    font-size: 25px;
+    font-weight: bold;
+    margin-right:5%;
+    width:55%;
+    float: left;
+}
+
+.btn-light {
+    width:40%;
+    padding: 5px;
+    -moz-text-decoration-color: none;
+}
+
+.card:hover .prod-title {
+    color:rgb(0, 175, 0);
+}
+

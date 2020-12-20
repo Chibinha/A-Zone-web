@@ -1,53 +1,34 @@
 <?php
 
+use yii\helpers\Url;
+use yii\helpers\StringHelper;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = "A+ Zone";
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<?php if (Yii::$app->session->hasFlash('message')) : ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo yii::$app->session->getFlash('message'); ?>
     </div>
+<?php endif; ?>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+<h1 style="color:grey;">  <li style="color: rgb(0, 175, 0); float: left;"></li> Products</h1>
+<hr style="height:2px;border:none;color: rgb(0, 175, 0);;background-color:rgb(0, 175, 0);">
+<?php foreach ($products as $product) { ?>
+<div class="card col-sm-1 col-md-3">
+    <div class="prod-content">
+        <a href="<?= Url::to(['product/view', 'id' => $product['id']]);?>">
+            <?= Html::img('@web/images/' . $product['product_image'], ['class' => 'prod-img']); ?>
+            <div class="prod-body">
+                <h5 class="prod-title"><?= $product['product_name'] ?></h5>
+                <p class="prod-text description"><?= $product['description'] ?></p>
+                <div class="price-button-line">
+                    <p class="prod-text price"><?= $product['unit_price'] ?>€</p>
+                    <button class="btn btn-light"> Add to cart</button>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
+        </a>
     </div>
 </div>
+<?php } ?>

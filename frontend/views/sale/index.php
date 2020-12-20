@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php 
         if (sizeof($user_sales) == 0)
         {?>
-            <td><h5><b>Não existem vendas para expedição</td>
+            <td><h5><b>Não tem vendas por expedir</td>
         <?php }
         else
         {

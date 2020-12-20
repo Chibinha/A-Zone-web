@@ -27,57 +27,63 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'A+ ZONE',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
+    
+$menuItems = [
+    ['label' => '<span class="glyphicon glyphicon-home"></span> &ensp; Página Inicial', 'url' => ['/site/index']],
+
+    ['label' => '<span class="glyphicon glyphicon-shopping-cart"></span> &ensp; Carrinho', 'url' => ['/site/cart']],
+];
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => 'Registar', 'url' => ['/site/signup']];
+    $menuItems[] = ['label' => '<span class="glyphicon glyphicon-log-in"></span> Login', 'url' => ['/site/login']];
+} else {
+    $menuItems[] = [
+        'label' => '<span class="glyphicon glyphicon-briefcase"></span> &ensp; A minha conta',
+        'items' => [
+            [
+                'label' => '<span class="glyphicon glyphicon-edit"></span> &ensp; Informações da Conta',
+                'url' => ['/user/update', 'id' => Yii::$app->user->identity->id],
+            ],
+            [
+                'label' => '<span class="glyphicon glyphicon-gift"></span> &ensp; Encomendas',
+                'url' => ['/sale/index', 'id' => Yii::$app->user->identity->id],
+            ],
+            [
+                'label' => '<span class="glyphicon glyphicon-log-out"></span> &ensp; Logout',
+                'url' => ['/site/logout'],
+                'linkOptions' => ['data-method' => 'post']
+            ],
+        ],
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Registar', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        
-        $menuItems[] = ['label' => 'Encomendas', 'url' => ['/sale/index']];
-        $menuItems[] = ['label' => 'Editar conta', 'url' => ['/user/update' , 'id' => Yii::$app->user->identity->id]];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+}
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav'],
+    'encodeLabels' => false,
+    'items' => $menuItems,
+]);
+echo '</li></ul>';
+NavBar::end();
+?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+<div class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
     </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

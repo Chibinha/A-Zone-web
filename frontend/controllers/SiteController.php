@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Product;
 
 
 /**
@@ -74,7 +75,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $products = Product::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
+
+        return $this->render('index', [
+            'products' => $products,
+        ]);
     }
 
     /**
