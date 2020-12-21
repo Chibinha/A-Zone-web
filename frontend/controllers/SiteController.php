@@ -229,4 +229,14 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    public function actionSearch()
+    {
+        $query = Yii::$app->request->get('query');
+
+        return $this->render('index', [
+            'message' => 'Resultados da procura: ' . $query,
+            'products' => Product::find()->where(['like', 'product_name', $query])->orderBy(['unit_price' => SORT_ASC])->asArray()->all(),
+        ]);
+    }
 }

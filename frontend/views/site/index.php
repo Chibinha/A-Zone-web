@@ -13,7 +13,10 @@ $this->title = "A+ Zone";
     </div>
 <?php endif; ?>
 
-<h1 style="color:grey;">  <li style="color: rgb(0, 175, 0); float: left;"></li> Products</h1>
+<h1 style="color:grey;"> <span style="color: rgb(0, 175, 0); float: left;">| </span>Products</h1>
+<?php if (!empty($message)) { ?>
+    <h4 style="color:grey;"> <?=$message?></h4>
+<?php } ?>
 <hr style="height:2px;border:none;color: rgb(0, 175, 0);;background-color:rgb(0, 175, 0);">
 <?php foreach ($products as $product) { ?>
 <div class="card col-sm-1 col-md-3">

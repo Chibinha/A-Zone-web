@@ -37,6 +37,16 @@ AppAsset::register($this);
         ],
     ]);
     
+    echo '<ul class="navbar-nav navbar-right col-"><li><form action="/site/search" method="get" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input name="query" type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+    </form>';
+
+    
 $menuItems = [
     ['label' => '<span class="glyphicon glyphicon-home"></span> &ensp; Página Inicial', 'url' => ['/site/index']],
 
