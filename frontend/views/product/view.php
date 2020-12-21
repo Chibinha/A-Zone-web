@@ -6,37 +6,30 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
+$this->title = $model->product_name;
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$quantity = 1;
 ?>
-<div class="product-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'product_name',
-            'unit_price',
-            'is_discontinued:boolean',
-            'description:ntext',
-            'product_image',
-            'id_category',
-        ],
-    ]) ?>
-
+<?= Html::img('@web/images/' . $model->product_image, ['class' => 'product-image col-md-2 col-lg-5']); ?>
+<div class="product-info">
+    <h2 style="color:black;"> <?=$this->title?></h2>
+    <div>
+        <h2 class="product-price"><?= Html::encode($model->unit_price) ?>€</h2>
+        <div class="product-quantity">
+            <p>Quantity:</p>
+            <button class="btn-minus" type="text">- </button>
+            <p class="text-quantity" ><?=$quantity?></p>
+            <button class="btn-plus" type="text">+</button>
+        </div>
+        <?= Html::a('Buy Now', ['cart/addcart', 'id' => $model->id], ['class' => 'btn btn-danger']) ?>
+        <?= Html::a('Add to cart', ['cart/addcart', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    </div>
 </div>
+    
+<div class="product-description">
+<h4>Descrição</h4>
+    <p><?= Html::encode($model->description) ?></p>
+</div>
+
+
