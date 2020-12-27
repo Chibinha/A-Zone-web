@@ -87,4 +87,41 @@ class Category extends \yii\db\ActiveRecord
             return Category::find()->where(['id' => $this->parent_id])->One()->description;
         }
     }
+
+    public static function getCategories(){
+        //Gets only categories and not subcategories
+        $cats = Category::find()->where(['parent_id' => null])->all();
+
+        $menu_item = [];
+        foreach ($cats as $uma_cat) {
+            $menu_item[] = [
+                'label' => $uma_cat->description,
+                'url' => ['category/view?id=' . $uma_cat->id ]
+            ];
+        }
+        return $menu_item;
+    }
+
+    public static function getProductsByCategories($subcats, $id)
+    {
+        $ids = [];
+        foreach($subcats as $value)
+        {
+            $ids[] = $value['id'];
+        }
+
+        $ids = implode(',',$ids);
+
+        if ($ids != null)
+        {
+            //Se for uma categoria
+            return Product::find()->where('id_category IN ('.$ids.','.$id.')')->orderBy(['unit_price' => SORT_ASC])->asArray()->all();
+        }
+        else
+        {
+            //Se for uma sub-categoria
+            $ids = 0;
+            return Product::find()->where('id_category IN ('.$ids.','.$id.')')->orderBy(['unit_price' => SORT_ASC])->asArray()->all();
+        }        
+    }
 }

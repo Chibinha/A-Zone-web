@@ -235,12 +235,12 @@ a.desc:after {
     text-align: center;
 }
 
-.btn-success {
+#btn-success {
     margin-top: 65px;
     margin-left: 10px;
 }
 
-.btn-danger{
+#btn-danger {
     margin-top: 65px;
 }
 

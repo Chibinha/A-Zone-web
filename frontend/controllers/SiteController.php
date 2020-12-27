@@ -15,7 +15,6 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Product;
 
-
 /**
  * Site controller
  */
@@ -75,7 +74,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $products = Product::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
+        $products = Product::find()->where(['is_discontinued' => '0'])->orderBy(['unit_price' => SORT_ASC])->asArray()->all();
 
         return $this->render('index', [
             'products' => $products,
