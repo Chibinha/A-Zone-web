@@ -30,7 +30,7 @@ $Total = 0;
             <tr>
                 <th style="width:40%">Item</th>
                 <th style="width:15%" class="text-center">Preço</th>
-                <th style="width:5%" class="text-center">Quantidade</th>
+                <th style="width:5%">Quantidade</th>
                 <th style="width:15%" class="text-center">Subtotal</th>
                 <th style="width:1%"></th>
             </tr>
@@ -55,16 +55,17 @@ $Total = 0;
                         <?php ActiveForm::end() ?>
                     </td>
                     <td data-th="Subtotal" class="text-center"><?= $subtotal[$i] ?>€</td>
+                    <td class="remove">
+                        <?= Html::a('Remover Item', ['cart/removecart', 'id' => $cart[$i]->id], ['class' => 'btn btn-danger btn-sm']) ?>
+                    </td>
                 </tr>
             <?php } ?>
         </tbody>
         <tfoot>
-            <tr class="visible-xs">
-                <td class="text-center"><strong>Total: <?= $Total ?>€</strong></td>
-            </tr>
             <tr>
                 <td colspan="3" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total: <?= $Total ?>€</strong></td>
+                <td class="hidden-xs text-center"><strong>Total: <?= $total ?>€</strong></td>
+                <a class="btn btn-primary" href="login">Terminar compra</a>
             </tr>
         </tfoot>
     </table>

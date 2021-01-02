@@ -54,16 +54,11 @@ $Total = 0;
             <?php } ?>
         </tbody>
         <tfoot>
-            <tr class="visible-xs">
-                <td class="text-center"><strong>Total: <?= $Total ?>€</strong></td>
-            </tr>
             <tr>
                 <td colspan="3" class="hidden-xs"></td>
                 <td class="hidden-xs text-center"><strong>Total: <?= $Total ?>€</strong></td>
             </tr>
         </tfoot>
     </table>
-
-    
     <br>
 </div>

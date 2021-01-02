@@ -22,7 +22,7 @@ $quantity = 1;
             <p class="text-quantity" ><?=$quantity?></p>
             <button class="btn-plus" type="text">+</button>
         </div>
-        <?= Html::a('Buy Now', ['site/cart', 'id' => $model->id], ['id' => 'btn-danger', 'class' => 'btn btn-danger']) ?>
+        <?= Html::a('Buy Now', ['cart/buy', 'id' => $model->id], ['id' => 'btn-danger', 'class' => 'btn btn-danger']) ?>
         <?= Html::a('Add to cart', ['cart/addcart', 'id' => $model->id], ['id' => 'btn-success', 'class' => 'btn btn-success']) ?>
     </div>
 </div>

@@ -28,7 +28,7 @@ class CartController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['addcart', 'buy', 'quantity'],
+                        'actions' => ['addcart', 'buy', 'quantity', 'removecart'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,7 +59,18 @@ class CartController extends Controller
 
     public function actionBuy($id)
     {
-        Addcart($id);
+        $product = (string)Yii::$app->request->get('id');
+
+        $session = Yii::$app->session;
+        if ($session->isActive) 
+        {
+            if($session->has('cart'))
+            {
+                $cart = $session->get('cart');
+            }
+                $cart[$product] = 1;
+            $session->set('cart', $cart);
+        }
         return $this->redirect(['site/cart']);
     }
 
@@ -76,6 +87,21 @@ class CartController extends Controller
 
             $cart[(string)$id] = $quantity;
 
+            $session->set('cart', $cart);
+        }
+
+        return $this->redirect(['site/cart']);
+    }
+
+    public function actionRemovecart($id)
+    {
+        $session = Yii::$app->session;
+        if ($session->isActive) {
+            $cart = [];
+            if ($session->has('cart')) {
+                $cart = $session->get('cart');
+                unset($cart[$id]);
+            }
             $session->set('cart', $cart);
         }
 
