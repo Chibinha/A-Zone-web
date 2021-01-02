@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td data-th="Total"><?= $sale->total ?></td>
                     <td data-th="Estado"><?= $sale->State ?></td> 
                     <td class="ver">
-                        <?= Html::a('Ver',  ['sale/view', 'id' => $sale->id],  ['class' => 'btn btn-primary']) ?>
+                        <?= Html::a('Ver',  ['sale/view', 'id' => $sale->id],  ['class' => 'btn btn-success']) ?>
                     </td>  
                 </tbody>
             <?php } 

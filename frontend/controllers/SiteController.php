@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Product;
+use common\models\Profile;
 
 /**
  * Site controller
@@ -236,6 +237,41 @@ class SiteController extends Controller
         return $this->render('index', [
             'message' => 'Resultados da procura: ' . $query,
             'products' => Product::find()->where(['like', 'product_name', $query])->orderBy(['unit_price' => SORT_ASC])->asArray()->all(),
+        ]);
+    }
+
+    public function actionCart()
+    {
+        $user_id = Yii::$app->user->getId();
+        $buyer = Profile::findOne($user_id);
+
+        $session = Yii::$app->session;
+        $cart = [];
+        $cartArray = [];
+        $subtotalArray = [];
+        $total = 0;
+        if ($session->isActive) {
+
+            if ($session->has('cart')) {
+                $cartArray = $session->get('cart');
+
+                
+                foreach ($cartArray as $key => $value) {
+                    $product = Product::findOne($key);
+                    array_push($cart, $product);
+                    $subtotal = $product->unit_price * $value;
+                    array_push($subtotalArray, $subtotal);
+                    $total += $subtotal;
+                }
+            }
+        }
+
+        return $this->render('cart', [
+            'buyer' => $buyer,
+            'cart' => $cart,
+            'quantity' => array_values($cartArray),
+            'subtotal' => $subtotalArray,
+            'total' => $total,
         ]);
     }
 }
