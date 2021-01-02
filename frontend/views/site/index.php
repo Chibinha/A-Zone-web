@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
+use yii\web\Session;
 /* @var $this yii\web\View */
 
 $this->title = "A+ Zone";
@@ -28,7 +29,7 @@ $this->title = "A+ Zone";
                 <p class="prod-text description"><?= $product['description'] ?></p>
                 <div class="price-button-line">
                     <p class="prod-text price"><?= $product['unit_price'] ?>€</p>
-                    <button class="btn btn-light"> Add to cart</button>
+                    <?= Html::a('Add to cart', ['cart/addcart', 'id' => $product['id']], ['class' => 'btn btn-light']) ?>
                 </div>
             </div>
         </a>

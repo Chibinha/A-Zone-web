@@ -22,13 +22,14 @@ $quantity = 1;
             <p class="text-quantity" ><?=$quantity?></p>
             <button class="btn-plus" type="text">+</button>
         </div>
-        <?= Html::a('Buy Now', ['cart/addcart', 'id' => $model->id], ['id' => 'btn-danger', 'class' => 'btn btn-danger']) ?>
+        <?= Html::a('Buy Now', ['site/cart', 'id' => $model->id], ['id' => 'btn-danger', 'class' => 'btn btn-danger']) ?>
         <?= Html::a('Add to cart', ['cart/addcart', 'id' => $model->id], ['id' => 'btn-success', 'class' => 'btn btn-success']) ?>
     </div>
 </div>
     
 <div class="product-description">
-<h4>Descrição</h4>
+<h4 style="padding:-5px">Descrição</h4>
+<hr style="height:1px;border:none;color: rgb(0, 175, 0);;background-color:rgb(0, 175, 0);">
     <p><?= Html::encode($model->description) ?></p>
 </div>
 

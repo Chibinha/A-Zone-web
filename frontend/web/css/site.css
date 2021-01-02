@@ -169,7 +169,16 @@ a.desc:after {
 .btn-light {
     width:40%;
     padding: 5px;
+    border: 2px solid rgb(0, 175, 0);
+    background-color: white;
+    color: black;
+    font-size: 16px;
 }
+
+.btn-light:hover {
+    background: rgb(0, 175, 0);
+    color: white;
+  }
 
 .card:hover .prod-title {
     color:rgb(0, 175, 0);
