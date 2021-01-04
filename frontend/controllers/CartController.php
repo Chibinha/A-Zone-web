@@ -37,7 +37,7 @@ class CartController extends Controller
         ];
     }
 
-    public function actionAddcart($id)
+    public function actionAddcart($id, $quantity)
     {
         $product = (string)Yii::$app->request->get('id');
 
@@ -48,7 +48,10 @@ class CartController extends Controller
             {
                 $cart = $session->get('cart');
             }
+            if ($quantity == null || $quantity == 0 || $quantity == "")
                 $cart[$product] = 1;
+            else
+                $cart[$product] = $quantity;
             $session->set('cart', $cart);
         }
 
@@ -77,6 +80,8 @@ class CartController extends Controller
     public function actionQuantity($id)
     {
         $quantity = Yii::$app->request->post('quantity');
+        if ($quantity == null || $quantity == 0 || $quantity == "")
+                $quantity = 1;
 
         $session = Yii::$app->session;
         if ($session->isActive) {

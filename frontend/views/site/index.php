@@ -29,10 +29,11 @@ $this->title = "A+ Zone";
                 <p class="prod-text description"><?= $product['description'] ?></p>
                 <div class="price-button-line">
                     <p class="prod-text price"><?= $product['unit_price'] ?>€</p>
-                    <?= Html::a('Add to cart', ['cart/addcart', 'id' => $product['id']], ['class' => 'btn btn-light']) ?>
+                    <?= Html::a('Add to cart', ['cart/addcart', 'id' => $product['id'], 'quantity' => 1], ['class' => 'btn btn-light']) ?>
                 </div>
             </div>
         </a>
     </div>
 </div>
-<?php } ?>
+<?php } 
+?>

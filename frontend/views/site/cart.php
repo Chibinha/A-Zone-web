@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-$Total = 0;
+$this->registerJsFile('@web/js/script.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="sale-view">
@@ -41,17 +42,21 @@ $Total = 0;
                     <td data-th="Item">
                         <div class="row">
                             <div class="col-sm-2 hidden-xs">
-                                <?= Html::img('@web/images/' . $cart[$i]->product_image, ['class' => 'img-responsive']); ?>
+                                <a href="<?= Url::to(['product/view', 'id' => $cart[$i]->id]);?>"> 
+                                    <?= Html::img('@web/images/' . $cart[$i]->product_image, ['class' => 'img-responsive']); ?>
+                                </a>
                             </div>
                             <div class="col-sm-9">
-                                <h5><?= $cart[$i]->product_name ?></h5>
+                                <a href="<?= Url::to(['product/view', 'id' => $cart[$i]->id]);?>"> 
+                                    <h5><?= $cart[$i]->product_name ?></h5> 
+                                </a>
                             </div>
                         </div>
                     </td>
                     <td data-th="Preço" class="text-center"><?= $cart[$i]->unit_price ?>€</td>
                     <td data-th="Quantidade">
                         <?php $form = ActiveForm::begin(['action' => ['cart/quantity', 'id' => $cart[$i]->id],]) ?>
-                        <input onchange="this.form.submit()" name="quantity" type="number" class="quantidade form-control text-center" value="<?= $quantity[$i] ?>" min="1" oninput="validity.valid||(value='1');">
+                        <input onchange="this.form.submit()" name="quantity" type="number" class="quantidade form-control text-center" value="<?= $quantity[$i] ?>" min="1" max="5" oninput="validity.valid||(value='1');">
                         <?php ActiveForm::end() ?>
                     </td>
                     <td data-th="Subtotal" class="text-center"><?= $subtotal[$i] ?>€</td>
@@ -62,10 +67,20 @@ $Total = 0;
             <?php } ?>
         </tbody>
         <tfoot>
+            <tr class="visible-xs">
+                <td class="text-center"><strong>Total: <span id="total"><?= $total ?></span>€</strong></td>
+            </tr>
             <tr>
-                <td colspan="3" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total: <?= $total ?>€</strong></td>
-                <a class="btn btn-primary" href="login">Terminar compra</a>
+                <td colspan="3" class="hidden-xs"></td><td class="hidden-xs text-center"><strong>Total <?= $total ?>€</strong></td>
+                <td>
+                    <?=Html::a('Terminar compra', ['sale/create',], [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => 'Deseja fazer uma encomenda?',
+                        'method' => 'post',
+                    ],
+                    ]);?>
+                </td>
             </tr>
         </tfoot>
     </table>
