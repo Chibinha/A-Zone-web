@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-
-$this->registerJsFile('@web/js/script.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="sale-view">
@@ -37,8 +35,17 @@ $this->registerJsFile('@web/js/script.js', ['depends' => [\yii\web\JqueryAsset::
             </tr>
         </thead>
         <tbody>
+            <?php if(count($cart) == 0) { ?>
+                <td>
+                    <a href="<?= Url::to(['site/index']);?>"> 
+                        <h5>Não existem produtos no seu carrinho.</h5>
+                    </a>
+                </td>
+            <?php } ?>
             <?php for ($i = 0; $i < count($cart); $i++) { ?>
+                
                 <tr>
+                    
                     <td data-th="Item">
                         <div class="row">
                             <div class="col-sm-2 hidden-xs">
@@ -67,13 +74,14 @@ $this->registerJsFile('@web/js/script.js', ['depends' => [\yii\web\JqueryAsset::
             <?php } ?>
         </tbody>
         <tfoot>
+        <?php if(count($cart) != 0) { ?>
             <tr class="visible-xs">
                 <td class="text-center"><strong>Total: <span id="total"><?= $total ?></span>€</strong></td>
             </tr>
             <tr>
                 <td colspan="3" class="hidden-xs"></td><td class="hidden-xs text-center"><strong>Total <?= $total ?>€</strong></td>
                 <td>
-                    <?=Html::a('Terminar compra', ['sale/create',], [
+                    <?=Html::a('Terminar compra', ['/sale/create',], [
                     'class' => 'btn btn-primary',
                     'data' => [
                         'confirm' => 'Deseja fazer uma encomenda?',
@@ -82,6 +90,7 @@ $this->registerJsFile('@web/js/script.js', ['depends' => [\yii\web\JqueryAsset::
                     ]);?>
                 </td>
             </tr>
+        <?php } ?>
         </tfoot>
     </table>
     <br>

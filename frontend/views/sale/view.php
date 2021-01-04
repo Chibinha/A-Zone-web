@@ -35,7 +35,6 @@ $Total = 0;
         <tbody>
             <?php foreach ($sale_items as $item) {
                 $product_info = Product::find()->where(['id' => $item['id_product']])->one();?>
-                <?php $Total =+ Sale::getQuantityPrice($item); ?>
                 <tr>
                     <td data-th="Item">
                         <div class="row">
@@ -56,7 +55,7 @@ $Total = 0;
         <tfoot>
             <tr>
                 <td colspan="3" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total: <?= $Total ?>€</strong></td>
+                <td class="hidden-xs text-center"><strong>Total: <?= $sale->total ?>€</strong></td>
             </tr>
         </tfoot>
     </table>

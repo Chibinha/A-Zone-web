@@ -11,6 +11,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Product;
+use common\models\SaleItem;
 
 /**
  * SaleController implements the CRUD actions for Sale model.
@@ -33,7 +35,7 @@ class SaleController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index', 'view', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,6 +78,46 @@ class SaleController extends Controller
             'buyer' => $buyer,
             'sale_items' => $sale_items,
         ]);
+    }
+
+    public function actionCreate()
+    {
+        $session = Yii::$app->session;
+        if ($session->isActive) {
+            $cart = [];
+            if ($session->has('cart') && $session->has('cart') != []) 
+            {
+                $cart = $session->get('cart');
+            }
+            else
+            {
+                \Yii::$app->session->addFlash('error', 'Não é possivel fazer encomenda sem items no carrinho.');
+                return $this->redirect(['site/cart']);
+            }
+        }
+
+        $sale = new Sale();
+        $sale->id_user = Yii::$app->user->getId();
+        $sale->sale_finished = 0;
+        $sale->save(false);
+
+        foreach ($cart as $item => $quantity) {
+            $product = Product::findOne($item);
+
+            $orderItem = new SaleItem();
+            $orderItem->id_sale = $sale->id;
+            $orderItem->unit_price = $product->unit_price;
+            $orderItem->id_product = $item;
+            $orderItem->quantity = $quantity;
+            if (!$orderItem->save(false)) {
+                \Yii::$app->session->addFlash('error', 'Não foi possivel gravar a sua encomenda.');
+                return $this->redirect('site/cart');
+            }
+        }
+
+        Yii::$app->session->remove('cart');
+
+        return $this->redirect(['site/finish-sale']);
     }
 
     /**

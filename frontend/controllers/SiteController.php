@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'finishsale'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -273,5 +273,10 @@ class SiteController extends Controller
             'subtotal' => $subtotalArray,
             'total' => $total,
         ]);
+    }
+
+    public function actionFinishSale()
+    {
+        return $this->render('finishSale',);
     }
 }

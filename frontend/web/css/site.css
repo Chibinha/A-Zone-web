@@ -227,11 +227,16 @@ a.desc:after {
     margin-left: 10px;
 }
 
-#btn-terminar-venda
+.center {
+    align-content: center;
+    margin: auto;
+    width: 85%;
+    margin-top: 300px;
+    border: 2px solid rgb(0, 175, 0);
+    padding: 10px;
+  }
+
+#btn-voltar
 {
-    float: right;
-    bottom: 0;
-    margin-left: -30px;
+    margin-left: 420px;
 }
-
-
