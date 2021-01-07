@@ -41,6 +41,7 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
+        unset($actions['update']);
         return $actions;
     }
     
@@ -93,5 +94,56 @@ class UserController extends ActiveController
         ])->asArray()->one();
 
         return array_merge($userData, $profile);
+    }
+
+    public function actionUpdate($id){
+
+        $user = User::findOne($id);
+        if (!$user) {
+            throw new \yii\web\NotFoundHttpException("The user was not found.");
+        }
+
+        $profile = Profile::find()->where(['id_user' => $user->id])->One();
+        if (!$profile) {
+            throw new \yii\web\NotFoundHttpException("The user has no profile.");
+        }
+
+        $user->username = \Yii::$app->request->post('username');
+        $user->email = \Yii::$app->request->post('email');
+        $profile->firstName = \Yii::$app->request->post('firstName');
+        $profile->lastName = \Yii::$app->request->post('lastName');
+        $profile->phone = \Yii::$app->request->post('phone');
+        $profile->address = \Yii::$app->request->post('address');
+        $profile->nif = \Yii::$app->request->post('nif');
+        $profile->postal_code = \Yii::$app->request->post('postal_code');
+        $profile->city = \Yii::$app->request->post('city');
+        $profile->country = \Yii::$app->request->post('country');
+
+        if($user->validate() && $profile->validate()) {
+            $profile->save();
+            $user->save();
+            
+            $user = User::find()->where(['id' => $id])->select([
+                "id",
+                "username",
+                "auth_key",
+                "email"
+            ])->asArray()->one();
+            $profile = Profile::find()->where(['id_user' => $id])->select([
+                "firstName",
+                "lastName",
+                "phone",
+                "address",
+                "nif",
+                "postal_code",
+                "city",
+                "country"
+            ])->asArray()->one();
+    
+            return array_merge($user, $profile);
+        }
+        else {
+            throw new \yii\web\BadRequestHttpException("The request could not be understood by the server due to malformed syntax.");
+        }       
     }
 }
