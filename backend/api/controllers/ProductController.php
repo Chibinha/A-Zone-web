@@ -19,7 +19,7 @@ class ProductController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
-            'except' => ['index'],
+            'except' => ['index', 'view'],
             'authMethods' => [
                 [
                     'class' => HttpBasicAuth::className(),
