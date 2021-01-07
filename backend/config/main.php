@@ -78,6 +78,7 @@ return [
                         'api/category',
                     ],
                     'extraPatterns' => [
+                        'GET {id}/products' => 'products',
                     ],
                 ],
             ],
