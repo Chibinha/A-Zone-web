@@ -41,7 +41,6 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['signup']);
         return $actions;
     }
     
@@ -72,5 +71,27 @@ class UserController extends ActiveController
             $response['errors'] = $model->getErrors();
             return $response;
         }
+    }
+
+    public function actionLogin()
+    {
+        $userData = User::find()->where(['id' => Yii::$app->user->getId()])->select([
+            "id",
+            "username",
+            "auth_key",
+            "email"
+        ])->asArray()->one();
+        $profile = Profile::find()->where(['id_user' => Yii::$app->user->getId()])->select([
+            "firstName",
+            "lastName",
+            "phone",
+            "address",
+            "nif",
+            "postal_code",
+            "city",
+            "country"
+        ])->asArray()->one();
+
+        return array_merge($userData, $profile);
     }
 }
