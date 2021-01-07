@@ -64,6 +64,14 @@ return [
                         'GET login' => 'login',
                     ],
                 ], 
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'api/product',
+                    ],
+                    'extraPatterns' => [
+                    ],
+                ],
             ],
         ],
     ],
