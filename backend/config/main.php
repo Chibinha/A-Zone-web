@@ -72,6 +72,14 @@ return [
                     'extraPatterns' => [
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'api/category',
+                    ],
+                    'extraPatterns' => [
+                    ],
+                ],
             ],
         ],
     ],
