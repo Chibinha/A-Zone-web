@@ -69,7 +69,12 @@ return [
                     'controller' => [
                         'api/product',
                     ],
+                    'tokens'=> 
+                    [
+                        '{name}'=> '<name:\\w+>'
+                    ],
                     'extraPatterns' => [
+                        'GET name/{name}' => 'productsbyname'
                     ],
                 ],
                 [

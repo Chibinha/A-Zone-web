@@ -19,7 +19,7 @@ class ProductController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
-            'except' => ['index', 'view'],
+            'except' => ['index', 'view', 'productsbyname'],
             'authMethods' => [
                 [
                     'class' => HttpBasicAuth::className(),
@@ -47,4 +47,11 @@ class ProductController extends ActiveController
     public function actionIndex() {
         return Product::find()->all();
     }
+
+     //http://localhost:8081/api/products/name/{name}
+     public function actionProductsbyname($name)
+     {
+         $productmodel = Product::find()->where(['like', 'product_name', $name])->limit(12)->orderBy(['id' => SORT_DESC])->asArray()->all();
+         return ['product' => $productmodel];
+     }
 }
