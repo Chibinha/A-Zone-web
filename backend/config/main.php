@@ -81,6 +81,13 @@ return [
                         'GET {id}/products' => 'products',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/sale', 
+                    'tokens'=> 
+                    [
+                    ],
+                ],
             ],
         ],
     ],
