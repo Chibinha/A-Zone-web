@@ -33,7 +33,7 @@ class ProductController extends Controller
                     [
                         'actions' => ['view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['?', '@'],
                     ],
                 ],
             ],
