@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <div class="product-description">
-<h4 style="padding:-5px">Descrição</h4>
-<hr style="height:1px;border:none;color: rgb(0, 175, 0);;background-color:rgb(0, 175, 0);">
-    <p><?= Html::encode($model->description) ?></p>
+    <h4 style="padding:-5px">Descrição</h4>
+    <hr style="height:1px;border:none;color: rgb(0, 175, 0);;background-color:rgb(0, 175, 0);">
+    <p  style="white-space:pre-line"><?= Html::encode($model->description) ?></p>
 </div>

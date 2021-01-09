@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if ($role) { ?> 
+    <?php if ($role ) { ?> 
     <h3 style="color:red"> This user is an employee </h3>
     <?php } ?>
 
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <?php if ($model->status != 0) { ?> 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);?>
         <?php if ($model->status != '0')
@@ -46,6 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]);} ?>
+        ]);} }?>
     </p>
 </div>

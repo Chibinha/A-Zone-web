@@ -140,6 +140,7 @@ a.desc:after {
 .prod-img {
     width:100%;
     margin-top: 15px;
+    height: 230px;
 }
 
 .prod-title{
@@ -204,8 +205,13 @@ a.desc:after {
     padding: 20px;
     float: left;
     box-shadow: 1px 1px 4px 4px rgb(0, 175, 0);
+    width: 100%;
 }
 
+.description-text {
+    white-space: pre-line;
+    height: 100%;
+}
 
 .product-price-quantity{
     float: left;

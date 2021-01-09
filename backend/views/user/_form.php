@@ -11,16 +11,17 @@ use yii\widgets\ActiveForm;
 <div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php if ($model->status != '0')
+    {?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]); ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]); ?>
 
-    <?php if ($model->status != '0')
-    {
-     $options= ['10' => 'Ativa', '9' => 'Por Ativar'];?>
+    
+     <?php $options= ['10' => 'Ativa', '9' => 'Por Ativar'];?>
 
-    <?= $form->field($model, 'status')->dropDownList($options);}?>
+    <?= $form->field($model, 'status')->dropDownList($options);?>
     <?php
 ?>
     
@@ -41,6 +42,11 @@ use yii\widgets\ActiveForm;
         <?= Html::a('Revoke Worker role', ['/user/isworker?id=' . $model->id], ['class'=>'btn btn-primary']) ?>
     <?php } else { ?>
         <?= Html::a('Assign Worker role', ['/user/isworker?id=' . $model->id], ['class'=>'btn btn-primary']) ?>
+    <?php } 
+    }
+    else { ?>
+    <h3 style="color:red"> This user cannot be updated since it has been deleted </h3>
+    <?= Html::a('Go Back', ['user/index'], ['class' => 'btn btn-primary']);?>
     <?php } ?>
 
     <?php ActiveForm::end(); ?>
