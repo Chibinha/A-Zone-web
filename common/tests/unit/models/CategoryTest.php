@@ -66,6 +66,7 @@ class CategoryTest extends Unit
 
     function testCreatingCategory()
     {
+        $this->tester->dontseeRecord('common\models\Category', ['description' => 'description']);
         $cat = new Category();
         $cat->description = "description";
         $cat->save();
@@ -78,6 +79,7 @@ class CategoryTest extends Unit
         $category = Category::find()->where(['description' => '123'])->One();
         $category->description = "changedDesc";
         $category->save();
+        $this->tester->dontseeRecord('common\models\Category', ['description' => '123']);
         $this->tester->seeRecord('common\models\Category', ['description' => 'changedDesc']);
     }
 
