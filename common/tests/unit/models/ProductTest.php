@@ -84,22 +84,27 @@ class ProductTest extends \Codeception\Test\Unit
 
     function testCreatingProduct()
     {
+        $this->tester->dontseeRecord('common\models\Product', ['description' => 'prod description']);
+        $this->tester->dontseeRecord('common\models\Product', ['product_image' => 'image2.jpg']);
+
         $prod = new Product();
         $prod->product_name = "prod name";
         $prod->unit_price = "10.00";
         $prod->description = "prod description";
-        $prod->product_image = "image.jpg";
+        $prod->product_image = "image2.jpg";
         $prod->id_category = 1;
 
         $prod->save();
         $this->tester->seeRecord('common\models\Product', ['description' => 'prod description']);
-        $this->tester->seeRecord('common\models\Product', ['product_image' => 'image.jpg']);
+        $this->tester->seeRecord('common\models\Product', ['product_image' => 'image2.jpg']);
     }
 
     function testUpdatingProduct()
     {
         $this->tester->seeRecord('common\models\Product', ['description' => 'Test description']);
         $this->tester->seeRecord('common\models\Product', ['unit_price' => '20.00']);
+        $this->tester->dontseeRecord('common\models\Product', ['description' => 'prod description']);
+        $this->tester->dontseeRecord('common\models\Product', ['unit_price' => '10.00']);
         $prod = Product::find()->where(['description' => 'Test description'])->One();
 
         $prod->product_name = "prod name";

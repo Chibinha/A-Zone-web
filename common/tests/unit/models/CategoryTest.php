@@ -83,15 +83,15 @@ class CategoryTest extends Unit
         $this->tester->seeRecord('common\models\Category', ['description' => 'changedDesc']);
     }
 
-    //This funtionality is throwing an error due to foreign key constraint, even though the database is set to cascade
+    function testDeletingCategory()
+    {
+        $this->tester->seeRecord('common\models\Category', ['description' => '123']);
 
-    // function testDeletingCategory()
-    // {
-    //     $this->tester->seeRecord('common\models\Category', ['id' => '1']);
-    //     $cat = Category::find(1)->One();
-    //     $cat->delete();
-    //     $this->tester->dontSeeRecord('common\models\Category', ['id' => '1']);
-    // }
+        $category = Category::find()->where(['description' => '123'])->One();
+        $category->delete();
+
+        $this->tester->dontseeRecord('common\models\Category', ['description' => '123']);;
+    }
 }
 
 

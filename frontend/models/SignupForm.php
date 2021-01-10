@@ -50,19 +50,20 @@ class SignupForm extends Model
 
 
             ['firstName', 'trim'],
-            ['firstName', 'required', 'message' => 'Introduza um nome.'],
-            ['firstName', 'string', 'max' => 30, 
+            ['firstName', 'required', 'message' => 'Introduza o seu nome.'],
+            ['firstName', 'string', 'min' => 2,'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['lastName', 'trim'],
-            ['lastName', 'required', 'message' => 'Introduza um apelido.'],
-            ['lastName', 'string', 'max' => 30, 
+            ['lastName', 'required', 'message' => 'Introduza o seu apelido.'],
+            ['lastName', 'string', 'min' => 2,'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['nif', 'trim'],
             ['nif', 'integer', 'message' => 'NIF incorreto.'],
+            ['nif', 'required', 'message' => 'Introduza o seu NIF.'],
             ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'Este NIF já foi registado.'],
             ['nif', 'string', 'min' => 9, 'max' => 9, 
                 'tooShort' => 'O NIF tem que ter 9 dígitos.', 
@@ -78,7 +79,7 @@ class SignupForm extends Model
 
             ['address', 'trim'],
             ['address', 'required', 'message' => 'Introduza a sua morada.'],
-            ['address', 'string', 'max' => 255, 
+            ['address', 'string', 'min' => 2, 'max' => 255, 
             'tooLong' => 'A morada não pode exceder os 255 digitos.'
             ],
 
@@ -91,7 +92,7 @@ class SignupForm extends Model
 
             ['city', 'trim'],
             ['city', 'required', 'message' => 'Introduza a sua cidade.'],
-            ['city', 'string', 'max' => 50, 
+            ['city', 'string', 'min' => 2, 'max' => 50, 
             'tooLong' => 'O nome da cidade não pode exceder os 50 digitos,vai ter que se mudar.'
             ],
 
@@ -114,7 +115,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;

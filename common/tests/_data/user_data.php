@@ -11,5 +11,17 @@ return [
         'created_at' => '1402312317',
         'updated_at' => '1402312317',
         'email' => 'nicole.paucek@schultz.info',
+        'status' => '10',
+    ],
+    [
+        'id' => 2,
+        'username' => 'troy.becker',
+        'auth_key' => 'EdKfXrx88weFMV0vIxuTMWKgfK2tS3Lp',
+        'password_hash' => '$2y$13$g5nv41Px7VBqhS3hVsVN2.MKfgT3jFdkXEsMC4rQJLfaMa7VaJqL2',
+        'password_reset_token' => '4BSNyiZNAuxjs5Mty990c47sVrgllIi_' . time(),
+        'created_at' => '1391885313',
+        'updated_at' => '1391885313',
+        'email' => 'nicolas.dianna@hotmail.com',
+        'status' => '10',
     ],
 ];

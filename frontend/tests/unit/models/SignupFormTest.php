@@ -1,10 +1,13 @@
 <?php
+
 namespace frontend\tests\unit\models;
 
+use Codeception\Test\Unit;
 use common\fixtures\UserFixture;
 use frontend\models\SignupForm;
+use common\models\User;
 
-class SignupFormTest extends \Codeception\Test\Unit
+class SignupFormTest extends Unit
 {
     /**
      * @var \frontend\tests\UnitTester
@@ -12,7 +15,15 @@ class SignupFormTest extends \Codeception\Test\Unit
     protected $tester;
 
 
-
+    public function _before()
+    {
+        $this->tester->haveFixtures([
+            'user' => [
+                'class' => UserFixture::className(),
+                'dataFile' => codecept_data_dir() . 'user_data.php'
+            ],
+        ]);
+    }
 
     public function testCorrectSignup()
     {
@@ -20,13 +31,13 @@ class SignupFormTest extends \Codeception\Test\Unit
             'username' => 'some_username',
             'email' => 'some_email@example.com',
             'password' => 'some_password',
-            'firstName' => 'Unit', 
-            'lastName' => 'Test', 
+            'firstName' => 'some_firstName', 
+            'lastName' => 'some_lastName', 
             'phone' => '000000000', 
-            'address' => 'Unit test address', 
+            'address' => 'Some address', 
             'postal_code' => '1234-123', 
-            'city' => 'Unit City', 
-            'country' => 'Unit Country', 
+            'city' => 'Some City', 
+            'country' => 'Some Country', 
             'nif' => '123456789',
         ]);
 
@@ -41,19 +52,17 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         $profile = $this->tester->grabRecord('common\models\Profile', [
-            'firstName' => 'Unit',
-            'city' => 'Unit City',
-            'nif' => '123456789'
+            'firstName' => 'some_firstName',
+            'city' => 'Some City',
+            'nif' => '1234-123'
         ]);
-
-        $profile->delete();
     }
 
     public function testNotCorrectSignup()
     {
         $model = new SignupForm([
-            'username' => 'troy.becker',
-            'email' => 'nicolas.dianna@hotmail.com',
+            'username' => 'bayer.hudson',
+            'email' => 'nicole.paucek@schultz.info',
             'password' => 'some_password',
         ]);
 

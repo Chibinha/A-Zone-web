@@ -218,23 +218,26 @@ class ProfileTest extends Unit
 
     function testCreatingProfile()
     {
-        $this->tester->seeRecord('common\models\User', ['username' => 'bayer.hudson']);
-        $user = User::find()->where(['username' => 'bayer.hudson'])->One();
+        $this->tester->dontseeRecord('common\models\Profile', ['firstName' => 'Some_firstname']);
+        $this->tester->dontseeRecord('common\models\Profile', ['nif' => '000000000']);
 
+        $user = User::find()->where(['username' => 'bayer.hudson'])->One();
         $profile = new Profile();
-        $profile->firstName = "some_firstname";
-        $profile->lastName = "some_lastname";
-        $profile->phone = "999999999";
-        $profile->nif = "999999999";
-        $profile->address = "some address";
+        $profile->id = 2;
+        $profile->firstName = "Some_firstName";
+        $profile->lastName = "Some_lastname";
+        $profile->phone = "000000000";
+        $profile->nif = "000000000";
+        $profile->address = "Some address";
         $profile->postal_code = "1234-123";
         $profile->city = "Some City";
         $profile->country = "Some Country";
         $profile->id_user = $user->id;
+
         $profile->save();
 
-        $this->tester->seeRecord('common\models\Profile', ['firstName' => 'some_firstname']);
-        $this->tester->seeRecord('common\models\Profile', ['nif' => '999999999']);
+        $this->tester->seeRecord('common\models\Profile', ['firstName' => 'Some_firstName']);
+        $this->tester->seeRecord('common\models\Profile', ['nif' => '000000000']);
         $this->tester->seeRecord('common\models\Profile', ['city' => 'Some City']);
     }
 
