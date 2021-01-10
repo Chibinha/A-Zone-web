@@ -31,18 +31,23 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'required', 'message' => 'Introduza um username.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já foi registado.'],
+            [
+                'username', 'string', 'min' => 2, 'max' => 255,
+                'tooShort' => 'O nome de utilizador tem que ter no mínimo 2 digitos.',
+                'tooLong' => 'O nome de utilizador não pode exceder os 255 digitos.'
+            ],
 
             ['email', 'trim'],
-            ['email', 'required'],
+            ['email', 'required', 'message' => 'Introduza um e-mail.'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já foi registado.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password', 'required', 'message' => 'Introduza uma password.'],
+            ['password', 'string', 'min' => 8, 'tooShort' => 'A password tem que ter no mínimo 8 digitos.'],
+
 
             ['firstName', 'trim'],
             ['firstName', 'required', 'message' => 'Introduza um nome.'],
@@ -58,7 +63,7 @@ class SignupForm extends Model
 
             ['nif', 'trim'],
             ['nif', 'integer', 'message' => 'NIF incorreto.'],
-            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'NIF já registado.'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'Este NIF já foi registado.'],
             ['nif', 'string', 'min' => 9, 'max' => 9, 
                 'tooShort' => 'O NIF tem que ter 9 dígitos.', 
                 'tooLong' => 'O NIF tem que ter 9 dígitos.'

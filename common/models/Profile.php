@@ -54,7 +54,7 @@ class Profile extends \yii\db\ActiveRecord
 
             ['nif', 'trim'],
             ['nif', 'integer', 'message' => 'NIF incorreto.'],
-            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'NIF já registado.'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'Este NIF já foi registado.'],
             ['nif', 'string', 'min' => 9, 'max' => 9, 
                 'tooShort' => 'O NIF tem que ter 9 dígitos.', 
                 'tooLong' => 'O NIF tem que ter 9 dígitos.'

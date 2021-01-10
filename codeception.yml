@@ -7,3 +7,7 @@ paths:
     log: console/runtime/logs
 settings:
     colors: true
+modules:
+    config:
+        Yii2:
+            configFile: 'config/test.php'

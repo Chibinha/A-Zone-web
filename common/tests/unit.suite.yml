@@ -4,4 +4,10 @@ bootstrap: false
 modules:
     enabled:
         - Yii2:
-            part: fixtures
+            part: [orm, email, fixtures]
+        - Asserts
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=a+zone_test'
+            user: 'root'
+            password: ''
+            cleanup: true

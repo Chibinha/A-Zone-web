@@ -73,9 +73,9 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['email', 'trim'],
             ['email', 'required', 'message' => 'Introduza um e-mail.'],
-            ['email', 'email', 'message' => 'Introduza um e-mail válido.'],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já está registado.'],
+            ['email', 'email'],
             ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já foi registado.'],
         ];
     }
     
