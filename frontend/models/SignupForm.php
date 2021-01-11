@@ -31,40 +31,34 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required', 'message' => 'Introduza um username.'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já foi registado.'],
-            [
-                'username', 'string', 'min' => 2, 'max' => 255,
-                'tooShort' => 'O nome de utilizador tem que ter no mínimo 2 digitos.',
-                'tooLong' => 'O nome de utilizador não pode exceder os 255 digitos.'
-            ],
+            ['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
-            ['email', 'required', 'message' => 'Introduza um e-mail.'],
-            ['email', 'email'],
+            ['email', 'required', 'message' => 'Introduza o seu e-mail.'],
+            ['email', 'email', 'message' => 'Introduza um e-mail válido.'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já foi registado.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required', 'message' => 'Introduza uma password.'],
-            ['password', 'string', 'min' => 8, 'tooShort' => 'A password tem que ter no mínimo 8 digitos.'],
-
+            ['password', 'required'],
+            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['firstName', 'trim'],
-            ['firstName', 'required', 'message' => 'Introduza o seu nome.'],
-            ['firstName', 'string', 'min' => 2,'max' => 30, 
+            ['firstName', 'required', 'message' => 'Introduza um nome.'],
+            ['firstName', 'string', 'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['lastName', 'trim'],
-            ['lastName', 'required', 'message' => 'Introduza o seu apelido.'],
-            ['lastName', 'string', 'min' => 2,'max' => 30, 
+            ['lastName', 'required', 'message' => 'Introduza um apelido.'],
+            ['lastName', 'string', 'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['nif', 'trim'],
             ['nif', 'integer', 'message' => 'NIF incorreto.'],
-            ['nif', 'required', 'message' => 'Introduza o seu NIF.'],
-            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'Este NIF já foi registado.'],
+            ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'NIF já registado.'],
             ['nif', 'string', 'min' => 9, 'max' => 9, 
                 'tooShort' => 'O NIF tem que ter 9 dígitos.', 
                 'tooLong' => 'O NIF tem que ter 9 dígitos.'
@@ -79,7 +73,7 @@ class SignupForm extends Model
 
             ['address', 'trim'],
             ['address', 'required', 'message' => 'Introduza a sua morada.'],
-            ['address', 'string', 'min' => 2, 'max' => 255, 
+            ['address', 'string', 'max' => 255, 
             'tooLong' => 'A morada não pode exceder os 255 digitos.'
             ],
 
@@ -92,7 +86,7 @@ class SignupForm extends Model
 
             ['city', 'trim'],
             ['city', 'required', 'message' => 'Introduza a sua cidade.'],
-            ['city', 'string', 'min' => 2, 'max' => 50, 
+            ['city', 'string', 'max' => 50, 
             'tooLong' => 'O nome da cidade não pode exceder os 50 digitos,vai ter que se mudar.'
             ],
 
@@ -115,7 +109,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-
+        
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;

@@ -85,12 +85,14 @@ class CategoryTest extends Unit
 
     function testDeletingCategory()
     {
-        $this->tester->seeRecord('common\models\Category', ['description' => '123']);
+        //This test only works when it is ran for the second time
+        
+        $this->tester->seeRecord('common\models\Category', ['description' => 'abc']);
 
-        $category = Category::find()->where(['description' => '123'])->One();
+        $category = Category::find()->where(['description' => 'abc'])->One();
         $category->delete();
 
-        $this->tester->dontseeRecord('common\models\Category', ['description' => '123']);;
+        $this->tester->dontseeRecord('common\models\Category', ['description' => 'abc']);;
     }
 }
 

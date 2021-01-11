@@ -3,3 +3,10 @@ actor: FunctionalTester
 modules:
     enabled:
         - Yii2
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=a+zone_test'
+            user: 'root'
+            password: ''
+            dump: tests/_data/dump.sql
+            cleanup: true
+            populate: true
