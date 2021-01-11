@@ -31,32 +31,33 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'required', 'message' => 'Introduza um username.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já foi registado.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required', 'message' => 'Introduza o seu e-mail.'],
             ['email', 'email', 'message' => 'Introduza um e-mail válido.'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este e-mail já foi registado.'],
 
-            ['password', 'required'],
+            ['password', 'required', 'message' => 'Introduza uma password.'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['firstName', 'trim'],
-            ['firstName', 'required', 'message' => 'Introduza um nome.'],
+            ['firstName', 'required', 'message' => 'Introduza o seu nome.'],
             ['firstName', 'string', 'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['lastName', 'trim'],
-            ['lastName', 'required', 'message' => 'Introduza um apelido.'],
+            ['lastName', 'required', 'message' => 'Introduza o seu apelido.'],
             ['lastName', 'string', 'max' => 30, 
             'tooLong' => 'Nome demasiado longo (30 caracteres), arranje outro'
             ],
 
             ['nif', 'trim'],
+            ['nif', 'required', 'message' => 'Introduza o seu nif.'],
             ['nif', 'integer', 'message' => 'NIF incorreto.'],
             ['nif', 'unique', 'targetClass' => '\common\models\Profile', 'message' => 'NIF já registado.'],
             ['nif', 'string', 'min' => 9, 'max' => 9, 

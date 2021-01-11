@@ -30,15 +30,69 @@ class LoginCest
     /**
      * @param FunctionalTester $I
      */
-    public function loginUser(FunctionalTester $I)
+    public function loginAdmin(FunctionalTester $I)
     {
         $I->amOnPage('/site/login');
-        $I->fillField('Username', 'erau');
-        $I->fillField('Password', 'password_0');
-        $I->click('login-button');
+        $I->submitForm('#login-form', [
+            'LoginForm[username]' => 'Bruno',
+            'LoginForm[password]' => '00000000',
+        ], 'login-button');
 
-        $I->see('Logout (erau)', 'form button[type=submit]');
+        $I->dontSee('Login');
         $I->dontSeeLink('Login');
         $I->dontSeeLink('Signup');
+        $I->see('Home');
+        $I->SeeLink('Home');
+        $I->see('Sales');
+        $I->SeeLink('Sales');
+        $I->see('Products');
+        $I->SeeLink('Products');
+        $I->see('Categories');
+        $I->SeeLink('Categories');
+        $I->see('Logout (Bruno)');
+    }
+    
+    public function loginWorker(FunctionalTester $I)
+    {
+        $I->amOnPage('/site/login');
+        $I->submitForm('#login-form', [
+            'LoginForm[username]' => 'Trabalhador 2',
+            'LoginForm[password]' => '00000000',
+        ], 'login-button');
+
+        $I->dontSee('Login');
+        $I->dontSeeLink('Login');
+        $I->dontSeeLink('Signup');
+        $I->see('Home');
+        $I->SeeLink('Home');
+        $I->see('Sales');
+        $I->SeeLink('Sales');
+        $I->see('Products');
+        $I->SeeLink('Products');
+        $I->see('Categories');
+        $I->SeeLink('Categories');
+        $I->dontsee('Users');
+        $I->dontSeeLink('Users');
+        $I->see('Logout (Trabalhador 2)');
+    }
+
+    public function loginClient(FunctionalTester $I)
+    {
+        $I->amOnPage('/site/login');
+        $I->submitForm('#login-form', [
+            'LoginForm[username]' => 'Cliente 1',
+            'LoginForm[password]' => '00000000',
+        ], 'login-button');
+
+        $I->see('Forbidden (#403)', 'h1');
+        $I->dontSee('Login');
+        $I->dontSeeLink('Login');
+        $I->dontSeeLink('Signup');
+        $I->dontsee('Home');
+        $I->dontsee('Sales');
+        $I->dontsee('Products');
+        $I->dontsee('Categories');
+        $I->dontsee('Users');
+        $I->see('Logout (Cliente 1)');
     }
 }
