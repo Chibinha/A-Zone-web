@@ -42,6 +42,7 @@ class UserController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['update']);
+        unset($actions['delete']);
         return $actions;
     }
     
@@ -145,5 +146,23 @@ class UserController extends ActiveController
         else {
             throw new \yii\web\BadRequestHttpException("The request could not be understood by the server due to malformed syntax.");
         }       
+    }
+
+    public function actionDelete($id)
+    {
+        $user = User::find()->where(['id' => $id])->One();
+        $user->status = 0;
+        $user->save();
+        
+        if ($user->validate()) {
+            $response['isSuccess'] = 201;
+            $response['message'] = 'Utilizador registado com sucesso!';
+            return $response;
+        } else {
+            $user->getErrors();
+            $response['hasErrors'] = $user->hasErrors();
+            $response['errors'] = $user->getErrors();
+            return $response;
+        }      
     }
 }
