@@ -50,20 +50,21 @@ class SaleController extends ActiveController
     public function actionCreate()
     {
         $params = Yii::$app->request->post();
-        
+
         $sale = new Sale();
         $sale->id_user = Yii::$app->user->getId();
         $sale->sale_finished = 0;
-        $sale->save();
+        $sale->save(false);
 
-        foreach ($params as $id => $quantity) {
-            $model = Product::findOne($id);
+        foreach ($params as $product)
+        {
+            $model = Product::findOne($product['id']);
 
             $orderItem = new SaleItem();
             $orderItem->id_sale = $sale->id;
             $orderItem->unit_price = $model->unit_price;
             $orderItem->id_product = $model->id;
-            $orderItem->quantity = $quantity;
+            $orderItem->quantity = $product['quantity'];
             if (!$orderItem->save(false)) {
                 $sale->getErrors();
                 $response['hasErrors'] = $sale->hasErrors();
@@ -71,8 +72,7 @@ class SaleController extends ActiveController
                 return $response;
             }
         }
-        $response['isSuccess'] = 201;
         $response['message'] = 'Venda Registada com sucesso!';
-        return $response;   
+        return $response;
     }
 }
