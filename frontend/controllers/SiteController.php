@@ -236,7 +236,7 @@ class SiteController extends Controller
 
         return $this->render('index', [
             'message' => 'Resultados da procura: ' . $query,
-            'products' => Product::find()->where(['like', 'product_name', $query])->orderBy(['unit_price' => SORT_ASC])->asArray()->all(),
+            'products' => Product::find()->where(['like', 'product_name', $query])->andWhere(['is_discontinued' => '0'])->orderBy(['unit_price' => SORT_ASC])->asArray()->all(),
         ]);
     }
 
