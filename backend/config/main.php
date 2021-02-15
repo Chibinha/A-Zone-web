@@ -93,6 +93,14 @@ return [
                     [
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/image',
+                    'tokens' =>
+                    [
+                        '{name}' => '<name:\\d+>',
+                    ],
+                ]
             ],
         ],
     ],
